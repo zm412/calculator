@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"> <title></title>
+<style>
+	table{
+		border: 2px solid black;
+		position: absolute; 
+			top: 30px; 
+			left: 30px; 
+			width: 100px; 
+			height: 100px; 
+			background: yellow; 
+			z-index: 1;
+	}
+	td, th{
+		text-align: center;
+		border: 2px solid black;
+		width: 30px;
+		height: 25px;
+	}
+
+	#elem{ position: absolute; 
+			top: 30px; 
+			left: 30px; 
+			width: 800px; 
+			height: 800px; 
+			background: yellow; 
+			z-index: 1; } 
+
+	.zin3{ 
+			position: absolute; 
+			top: 60px; 
+			left: 60px; 
+			width: 50px; 
+			height: 50px;
+	background: blue;
+	z-index: 2;
+	}
+
+	#el2{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 10px;
+	height: 10px;
+	background: green;
+	z-index: 2;
+
+	.red{
+			color: red;}
+	.none { display: none; } 
+	.inline { display: inline; } 
+	.block { display: block; } 
+	.black{border:2px solid  black; 
+		width: 30%;
+		height: 200px;}
+	.backgr { background-color: red; }
+
+</style>
+<script>
+'use strict'
+
+function getHigthFromTop(){
+	let tbl = document.getElementById('tbl');
+	getTbl(tbl);
+	getTargetClick('td', inp);
+	}
+
+function getTbl(elem){
+	let k = 0;
+		for(let i = 1; i <= 3; i++){
+			let tr = createEl('tr', elem);
+			for(let j = 1; j <=3; j++){
+				let td = createEl('td', tr);
+			}
+		}
+}
+			
+function getTargetClick(tag, elInp){
+		let elems = document.querySelectorAll('td');
+		for(let i = 0;  i < elems.length; i++){
+			elems[i].addEventListener('click', function getExc(){
+					if(this.innerHTML != '='){
+				elInp.value += this.innerHTML;
+					}else{
+						elInp.value = eval(elInp.value);
+					this.removeEventListener('click', getExc);	
+					}
+			elems[i].addEventListener('click', getExc)
+			});
+		}
+}
+
+console.log(String.fromCharCode(55));
+
+function createEl(tag, par ){		
+	let el = document.createElement(tag);	
+		par.appendChild(el);
+		return el;
+}		
+
+
+</script>
+ 
+	</head>
+		<body>
+<body onload = "getHigthFromTop()"> 
+		<table id = 'tbl'>
+		</table>
+		<div id = 'counter'>
+			<p id = 'plusX'> Viigral X: </p>
+			<p id = 'plusN'> Viigral 0: </p>
+			<p id = 'nich'> Nichya: </p>
+
+		</div>
+		<p id = 'elem'></p>
+</body> 
+
+	
+</html>
+
