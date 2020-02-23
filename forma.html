@@ -6,8 +6,8 @@
 	td, th{
 		text-align: center;
 		border: 2px solid black;
-		width: 30px;
-		height: 25px;
+		width: 50px;
+		height: 30px;
 	}
 </style>
 <body onload = "getHigthFromTop()"> 
@@ -20,7 +20,7 @@
 'use strict'
 
 function getHigthFromTop(){
-	let symbols = [55,56,57, 47, 52, 53, 54,42,49, 50, 51, 45, 48, 46,61,43];			
+	let symbols = [55, 56, 57, 47, 52, 53, 54, 42, 49, 50, 51, 45, 48, 46, 61, 43];			
 	let inp = document.getElementById('inp');			
 	let tbl = document.getElementById('tbl');
 	getTbl(tbl, symbols);
@@ -31,7 +31,7 @@ function getTbl(elem, arr){
 	let k = 0;			
 		for(let i = 1; i <= 4; i++){		
 			let tr = createEl('tr', elem);	
-			for(let j = 1; j <=4; j++){	
+			for(let j = 1; j <= 4; j++){	
 				let td = createEl('td', tr);
 				td.innerHTML = String.fromCharCode(arr[k]);		
 				k++;		
@@ -53,8 +53,6 @@ function getTargetClick(tag, elInp){
 			});
 		}	
 }			
-
-console.log(String.fromCharCode(55));			
 
 function createEl(tag, par ){			
 	let el = document.createElement(tag);		
