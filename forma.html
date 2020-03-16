@@ -11,45 +11,84 @@
 	}
 </style>
 <body onload = "getHigthFromTop()"> 
+		<p id = 'info'></p>
 		<table id = 'tbl'>
 			
-<tr><th>C</th><th id = 'double' colspan = '3'><input type = 'text' id = 'inp' ></th></tr>
+				<tr><th>C</th><th id = 'double' colspan = '3'><input type = 'text' id = 'inp' ></th></tr>
 		</table>
 </body> 
 <script>
 'use strict'
 
+	let collector = '';
+
 function getHigthFromTop(){
-	let symbols = [55, 56, 57, 47, 52, 53, 54, 42, 49, 50, 51, 45, 48, 46, 61, 43];			
 	let inp = document.getElementById('inp');			
+	let p = document.getElementById('info');			
 	let tbl = document.getElementById('tbl');
+
+	let symbols = [7,8,9,'/',4,5,6,'*', 1,2,3,'-', 0, '.', '=', '+', 'Restart', 'Clear', 'Insert',''];			
+		
 	getTbl(tbl, symbols);
-	getTargetClick('td', inp);
-	}
+	getTargetClick('td', inp, p);
+
+	
+}
+
+
+function deleteOfLastElem(elem){
+		let arr = elem.innerHTML.split('');
+		arr.pop();
+		elem.innerHTML = arr.join('');
+}
+
 
 function getTbl(elem, arr){				
 	let k = 0;			
-		for(let i = 1; i <= 4; i++){		
+		for(let i = 1; i <= 5; i++){		
 			let tr = createEl('tr', elem);	
 			for(let j = 1; j <= 4; j++){	
 				let td = createEl('td', tr);
-				td.innerHTML = String.fromCharCode(arr[k]);		
+				td.innerHTML = arr[k];		
 				k++;		
 			}			
 		}				
 }						
 
-function getTargetClick(tag, elInp){						
-		let elems = document.querySelectorAll('td');				
-		for(let i = 0;  i < elems.length; i++){				
-			elems[i].addEventListener('click', function getExc(){			
-					if(this.innerHTML != '='){	
-				elInp.value += this.innerHTML;		
-					}else{	
-						elInp.value = eval(elInp.value);
-					this.removeEventListener('click', getExc);	
-					}	
-			elems[i].addEventListener('click', getExc)
+function getTargetClick(tag, elInp, elP){						
+	let elems = document.querySelectorAll('td');				
+
+	for(let i = 0;  i < elems.length; i++){				
+		elems[i].addEventListener('click', function getExc(){		
+			let inInp = this.innerHTML;
+
+		if(inInp >= 0 || inInp == '.'){	
+			elInp.value += inInp;		
+			elP.innerHTML += inInp;
+		}
+
+		else if(inInp == '/' || inInp == '*' || inInp == '+' || inInp == '-'){
+			elInp.value += inInp;		
+			elP.innerHTML += inInp;
+			elInp.value = '';
+
+		}else if(inInp == '='){	
+			collector = eval(elP.innerHTML);
+			elInp.value = eval(elP.innerHTML);
+			elP.innerHTML += ' = ' + elInp.value;
+			}	
+		else if(inInp == 'Clear'){
+			elInp.value = '';
+			deleteOfLastElem(elP);
+
+		}else if(inInp == 'Insert'){
+			elInp.value += collector;
+
+		}else if(inInp == 'Restart'){
+			elP.innerHTML = '';
+			elInp.value = '';
+		};
+					
 			});
 		}	
 }			
